@@ -1,10 +1,15 @@
+<script setup></script>
+
 <template>
+   
     <div>
-        <header class="bg-indigo-500 text-white">
-            <nav class="flex item-center justify-between p-4 max-w-screen-lg mx-auto">
+        <header >
+            <nav>
                 <div class="space-x-6">
-                    <a href="/">Home</a>
-                    <a href="/about">About</a>
+                    <Link :href="route('home')" class="nav-link">Home</Link> <!-- :href to make it dynamic -->
+                </div>
+                <div class="space-x-6">
+                     <Link :href="route('register')" class="nav-link">Register</Link> <!-- :href to make it dynamic -->
                 </div>
             </nav>
         </header>
