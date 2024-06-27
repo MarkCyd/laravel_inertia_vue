@@ -6,11 +6,16 @@
         <header >
             <nav>
                 <div class="space-x-6">
-                    <Link :href="route('home')" class="nav-link">Home</Link> <!-- :href to make it dynamic -->
+                    <Link :href="route('home')" class="nav-link" :class="{'bg-slate-700' :$page.component ==='Home'}">Home</Link> <!-- :href to make it dynamic -->
                 </div>
-                <div class="space-x-6">
-                     <Link :href="route('register')" class="nav-link">Register</Link> <!-- :href to make it dynamic -->
-                     <Link :href="route('login')" class="nav-link">Login</Link> 
+               
+                <div v-if="$page.props.auth.user" class="space-x-6">
+                    <Link :href="route('dashboard')" class="nav-link" :class="{'bg-slate-700' :$page.component ==='Dashboard'}">dashboard</Link> 
+                    <Link :href="route('logout')" method="post" as="button" type="button" class="nav-link">logout</Link> <!-- :href to make it dynamic -->
+                </div>
+                <div v-else class="space-x-6">
+                     <Link :href="route('register')" class="nav-link" :class="{'bg-slate-700' :$page.component ==='Auth/Register'}">Register</Link> <!-- :href to make it dynamic -->
+                     <Link :href="route('login')" class="nav-link" :class="{'bg-slate-700' :$page.component ==='Auth/Login'}">Login</Link> 
                 </div>
             </nav>
         </header>

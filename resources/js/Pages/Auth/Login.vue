@@ -8,12 +8,12 @@ const form = useForm   ({  //dont need name and password confirmation
      
         email:null,
         password:null,
-     
+        remember:null,     
     });
     const submit = ()=>{
         //router.post('/register',form) //this will use the router import to uri /register with the data from form
         form.post(route('login'),{          // due to useform import we dont need the payload data //you can use route() instead hardcoded uri
-            onError:()=> form.reset("password"), //will reset form data of password and pass_confirm leave the others alone 
+            onError:()=> form.reset("password","remember"), //will reset form data of password and pass_confirm leave the others alone 
         }); 
     };
 </script>
@@ -27,10 +27,17 @@ const form = useForm   ({  //dont need name and password confirmation
                                         <!-- from will call submit function  -->
         <TextInput name="email" type="email" v-model="form.email" :message="form.errors.email"/>
         <TextInput name="password" type="password" v-model="form.password" :message="form.errors.password"/>
-         <div>
-                <p class="text-slate-600 mb-2">Need an Account? <a :href="route('register')" class="text-link">Login</a></p>
+        <div class="flex item-center justify-between mb-2">
+        <div class="flex item-center gap-2 ">
+            <input type="checkbox" v-model="form.remember" id="remember"/>
+            <label for="remember">Remember Me</label>
+            
+        </div>    
+            <p class="text-slate-600 ">Need an Account? <a :href="route('register')" class="text-link">Login</a></p>
+        </div> 
+        <div>
                 <button class="primary-btn" :disabled="form.processing">Login</button> <!-- will disable if processing in progress this can help spam protection -->
-            </div>
+        </div>
         </form>
 
     </div>
