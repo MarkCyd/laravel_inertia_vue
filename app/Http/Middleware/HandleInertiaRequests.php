@@ -36,11 +36,10 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array //to let data from layout to be shared to the other pages its better hide it under auth
     {
         return array_merge(parent::share($request), [
-            'auth.user'=>'john' ?? null,
-            //lazy call
-           /*  'auth.user' => fn () => $request->user() this cal async funtion to expose id name and email
-            ? $request->user()->only('id', 'name', 'email')
-            : null, */
+           
+             'auth.user' => fn () => $request->user() //this cal async funtion to expose id name and email
+            ? $request->user()->only('id', 'name')
+            : null, 
         ]);
     }
 }

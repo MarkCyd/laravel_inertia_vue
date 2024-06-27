@@ -10,6 +10,7 @@
                 </div>
                 <div class="space-x-6">
                      <Link :href="route('register')" class="nav-link">Register</Link> <!-- :href to make it dynamic -->
+                     <Link :href="route('login')" class="nav-link">Login</Link> 
                 </div>
             </nav>
         </header>
