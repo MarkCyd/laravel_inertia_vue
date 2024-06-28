@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
            
              'auth.user' => fn () => $request->user() //this cal async funtion to expose id name and email
-            ? $request->user()->only('id', 'name')
+            ? $request->user()->only('id', 'name','avatar')
             : null, 
         ]);
     }
