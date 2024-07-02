@@ -1,12 +1,24 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 //use Inertia\Inertia;
                                                     //inside inertia('/', 'Home',['users'=> User::all()] ['names'] we can specifiy which to show if we dont
                                                     //use user model that dont have hide protect password and token
-Route::inertia('/', 'Home',['users'=> User::paginate(5)])->name('home');                                  //reason ziggy plugin is needed ;
+//Route::get('/', 'Home',['users'=> User::paginate(5)])->name('home');                                  //reason ziggy plugin is needed ;
+Route::get('/', function (Request $request) {
+    return inertia('Home', [
+        'users' => User::when($request->search, function ($query) use ($request) {
+            $query
+            ->where('name', 'like', '%' . $request->search . '%')
+            ->where('email', 'like', '%' . $request->search . '%');
+        })->paginate(5)->withQueryString(),
+
+        'searchTerm' =>$request->search
+    ]);
+})->name('home');
 
 Route::middleware("auth")->group(function(){
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');

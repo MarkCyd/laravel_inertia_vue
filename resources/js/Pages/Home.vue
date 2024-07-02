@@ -1,7 +1,14 @@
 <script setup>
+import { ref, watch } from "vue";
 import PaginationLinks from "./Components/PaginationLinks.vue"
-defineProps({
+import {router} from "@inertiajs/vue3";
+/* import { throttle } from "lodash"; */ //as you type only submit on the value of delay
+import { debounce } from "lodash"; //send only when you stop
+
+
+const props = defineProps({
     users: Object, //users not user
+    searchTerm: String
 });
 //formate date
 const getDate = (date)=>
@@ -11,14 +18,25 @@ const getDate = (date)=>
         day: "numeric",
     });
 
+const search = ref(props.searchTerm);
+
+watch(
+  search,
+  debounce((q) => router.get("/", { search: q }, { preserveState: true }), 500)
+);
+
 </script>
 <template>
     <!--  <h1>{{ $page.props.auth.user }}</h1>  so non auth can get that data its good for log in greating -->
     <!--  <Link class="mt-[1200px] block" href="/" preserve-scroll>Refresh</Link>  if preserve-scroll is present it will not go back to top  -->
 
     <Head :title="$page.component" /> <!-- adding: to title will turn it into a dynamic from static page -->
-    <h1>Home Page</h1>
-    <div>
+     <div>
+        <div class="flex justify-end mb-4">
+            <div class="w-1/4">
+                <input type="search" placeholder="Search" v-model="search">
+            </div>
+        </div>
         <table>
             <thead>
                 <tr class="bg-slate-300">
