@@ -28,7 +28,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
+    protected $hidden = [     //this will hide if fetching all user from inspect elemtnt and etc
         'password',
         'remember_token',
     ];
