@@ -8,7 +8,9 @@ import { debounce } from "lodash"; //send only when you stop
 
 const props = defineProps({
     users: Object, //users not user
-    searchTerm: String
+    searchTerm: String,
+    can: Object,
+
 });
 //formate date
 const getDate = (date)=>
@@ -44,6 +46,8 @@ watch(
                     <th>Name</th>
                     <th>Email</th>
                     <th>Registration Date</th>
+                    <th v-if="can.delete_user">Delete</th>
+                    
                 </tr>
             </thead>
 
@@ -55,6 +59,9 @@ watch(
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ getDate(user.created_at) }}</td>
+                    <td v-if="can.delete_user">
+                        <button class="bg-red-500 w-14 h-6 rounded-md text-white">delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

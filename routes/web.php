@@ -1,8 +1,9 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 //use Inertia\Inertia;
                                                     //inside inertia('/', 'Home',['users'=> User::all()] ['names'] we can specifiy which to show if we dont
@@ -16,7 +17,10 @@ Route::get('/', function (Request $request) {
             ->where('email', 'like', '%' . $request->search . '%');
         })->paginate(5)->withQueryString(),
 
-        'searchTerm' =>$request->search
+        'searchTerm' =>$request->search,
+        'can' => [
+            'delete_user' => Auth::user()  ? Auth::user()->can('delete',User::class) : null
+        ]
     ]);
 })->name('home');
 
